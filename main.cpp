@@ -187,6 +187,25 @@ void AddDish(){
 }
 
 void Order(){
+	system("clear");
+	char item[1010];
+	char pembeli[1010];
+	int Boolean = true;
+	while(Boolean == true){
+		printf("Insert the customer's name: ");
+		scanf("%[^\n]", pembeli);
+		getchar();
+		for(int ii=0; ii<TableSize; ii++){
+		Customer *temp = table[ii];
+			if(temp != NULL){
+				if(strcmp(temp->customerName, pembeli)){
+					printf("%s is present.\n", str1);
+					find = 2;
+					break;
+				}
+			}
+		}
+	}
 	
 }
 
