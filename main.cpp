@@ -186,6 +186,10 @@ void AddDish(){
 	}
 }
 
+void Order(){
+	
+}
+
 void pay(){
 	system("clear");
 	printf("Insert the customer's index: ");
@@ -318,9 +322,9 @@ int main () {
         case 5:
             View();
             break;
-        // case 6:
-        //     Order();
-        //     break;
+        case 6:
+            Order();
+            break;
         case 7:
             pay();
             break;
