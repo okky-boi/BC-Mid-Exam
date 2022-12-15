@@ -14,10 +14,6 @@ struct dish{
 
 struct Customer{
 	char customerName[1001];
-	Customer *next2;
-	char tempo[1001];
-	char foodName[100][100];
-	int foodType;
 	long long int sum;
 } *table[TableSize];
 
@@ -29,6 +25,112 @@ dish *createDish(const char *dishName, int dishPrice, int dishQuantity){
 	newDish->next = NULL;
     newDish->prev = NULL;
 	return newDish;
+}
+
+int hashKey(char name[])
+{
+	int len = strlen(name);
+	unsigned long hash = 5381;
+	for (int i = 0; i < len; i++)
+	{
+		int ascii = int(name[i]);
+		hash = (hash << 5) + hash + ascii;
+	}
+	return hash % TableSize;
+}
+
+Customer *newCustomer(char name[]){
+	Customer *newCustomer = (Customer *)malloc(sizeof(Customer));
+	strcpy(newCustomer->customerName, name);
+	newCustomer->sum = NULL;
+	return newCustomer;
+}
+
+void push(char name[]){
+	int key = hashKey(name);
+	if (table[key] == NULL){
+		table[key] = newCustomer(name);
+	}
+	else{
+		for (int j = key + 1; j != key; j++){
+			j%=TableSize;
+			if (table[key] == NULL)	{
+				table[key] = newCustomer(name);
+				break;
+			}
+		}
+	}
+}
+
+void AddCust(){
+	int BoolAddCustomer = true;
+	int count2;
+	char namaCust[1010];
+	system("clear");
+	while (BoolAddCustomer == true){
+		count2 = 0;
+		printf("Insert the customer's name [Without space]: ");
+		scanf("%[^\n]", namaCust);
+		getchar();
+		for (int i = 0; i < strlen(namaCust); i++){
+			if (namaCust[i] >= 'a' && 'z' >= namaCust[i]){
+				count2++;
+				if (count2 == strlen(namaCust)){
+					BoolAddCustomer = false;
+				}
+			}
+			if (namaCust[i] >= 'A' && 'Z' >= namaCust[i]){
+				count2++;
+				if (count2 == strlen(namaCust)){
+					BoolAddCustomer = false;
+				}
+			}
+			if (namaCust[i] == ' '){
+				BoolAddCustomer = true;
+			}
+		}
+	}
+	push(namaCust);
+	printf("\nCustomer has been added!\n");
+	printf("\nPress enter to continue...");
+	getchar();
+}
+
+void SchCust(){
+	system("clear");
+	char str1[1010]={"-"};
+	int find = 1;
+	printf("Insert the customer's name to be searched: ");
+	scanf("%[^\n]", str1);
+	getchar();
+	for(int ii=0; ii<TableSize; ii++){
+		Customer *temp = table[ii];
+		if(temp != NULL){
+			if(strcmp(temp->customerName, str1)){
+				printf("%s is present.\n", str1);
+				find = 2;
+				break;
+			}
+		}
+	}
+	if(find == 1){
+		printf("%s is not present.\n", str1);
+	}
+	printf("Press enter to continue...");
+	getchar();
+}
+
+void View(){
+	system("clear");
+	printf("Customer's List\n\n");
+	for(int i=0; i<TableSize; i++){
+		Customer * curr = table[i];
+		if(curr != NULL){
+			printf("%d. %s\n\n", i, curr->customerName);
+		}
+	}
+	printf("Press enter to continue...");
+	getchar();
 }
 
 void AddDish(){
@@ -194,15 +296,15 @@ int main () {
         case 2:
             RmDish();
             break;
-        // case 3:
-        //     AddCust();
-        //     break;
-        // case 4:
-        //     SchCust();
-        //     break;
-        // case 5:
-        //     View();
-        //     break;
+        case 3:
+            AddCust();
+            break;
+        case 4:
+            SchCust();
+            break;
+        case 5:
+            View();
+            break;
         // case 6:
         //     Order();
         //     break;
