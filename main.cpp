@@ -146,6 +146,7 @@ void RmDish(){
 }
 
 void EXIT(){
+    system("clear");
     printf("Please expand your terminal to full screen!\n");
     printf("Press enter to continue...");
     getchar();
