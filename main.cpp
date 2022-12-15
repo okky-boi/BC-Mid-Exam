@@ -186,6 +186,19 @@ void AddDish(){
 	}
 }
 
+void pay(){
+	system("clear");
+	printf("Insert the customer's index: ");
+	int t;
+	scanf("%d", t);
+	getchar();
+	printf("\n");
+	Customer *temp1 = table[t];
+	printf("Total: Rp%d\n", temp1->sum);
+	printf("Press enter to continue...");
+	getchar();
+}
+
 void Delete(char ReDName[]){
 	
     if (!head){
@@ -308,9 +321,9 @@ int main () {
         // case 6:
         //     Order();
         //     break;
-        // case 7:
-        //     pay();
-        //     break;
+        case 7:
+            pay();
+            break;
         case 8:
             EXIT();
             break;
